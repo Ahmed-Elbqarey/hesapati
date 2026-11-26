@@ -18,7 +18,7 @@ A personal finance tracker in Arabic (Egyptian dialect, right-to-left), built as
 - **Debts, installments, and associations (جمعيات)**: track money you owe and money owed to you, with partial payments and due dates.
 - **Reports**: a donut chart of spending by category for a chosen month, comparison with the previous month, and a 6-month income vs. expense chart.
 - **Settings**: light, dark, or automatic theme, optional PIN lock screen, and spending reminders.
-- **Data tools**: backup and restore as copy-paste JSON text, and CSV export as copy-paste text for Excel.
+- **Data tools**: backup as a `.json` file (on Android it opens the share sheet so you can send it to Drive, WhatsApp or Files) and restore from that file. The old copy-paste JSON text backup and restore are still there as a fallback ("نسخ كنص" and "لصق نص"), and the formats are the same, so old text backups still restore. CSV export is copy-paste text for Excel.
 - **Reminders (Android app only)**: local notifications at times you choose (defaults 14:00 and 21:00) asking you to log your spending, skipped if you already logged something recently. Includes a test notification button.
 
 ## Notes and limits
@@ -32,7 +32,7 @@ A personal finance tracker in Arabic (Egyptian dialect, right-to-left), built as
 ## Tech
 
 - Plain HTML, CSS, and JavaScript in one file: `www/index.html`. No framework and no build step for the web app.
-- [Capacitor](https://capacitorjs.com/) 6 (`@capacitor/core`, `@capacitor/android`, `@capacitor/local-notifications`) to package it for Android. App ID: `com.hesabati.app`.
+- [Capacitor](https://capacitorjs.com/) 6 (`@capacitor/core`, `@capacitor/android`, `@capacitor/local-notifications`, `@capacitor/filesystem`, `@capacitor/share`) to package it for Android. App ID: `com.hesabati.app`.
 - GitHub Actions workflow (`.github/workflows/android.yml`) that builds a debug APK.
 
 ## How to run
@@ -64,6 +64,21 @@ cd android && ./gradlew assembleDebug
 
 The APK is written to `android/app/build/outputs/apk/debug/app-debug.apk`. The workflow also adds the `POST_NOTIFICATIONS` and `RECEIVE_BOOT_COMPLETED` permissions to the Android manifest, which you need to do yourself for local builds if you want reminders.
 
+## Changelog
+
+### 1.1.0 (2026-11-26)
+
+- Backup is now a file: "حفظ نسخة (ملف)" saves `hesabati-backup-YYYY-MM-DD.json` and opens the Android share sheet (in a browser it downloads the file).
+- "استرجاع من ملف" restores from a backup file after a confirmation, since it replaces all current data.
+- The copy-paste text backup and restore stay as "نسخ كنص" and "لصق نص". Backups from version 1.0.0 restore with either method.
+- Added the `@capacitor/filesystem` and `@capacitor/share` plugins.
+- Not tested on a physical device at the time of release.
+
+### 1.0.0
+
+- First version: accounts, transactions, budgets, goals, recurring entries, debts, reports, PIN lock, reminders, copy-paste backup.
+
 ## License
 
 No license file is included in this repository.
+
